@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Romeo and Juliet Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Romeo and Juliet Chatbot</h1>
+      <div id="chatbox" class="card mb-3">
+        <div class="card-body" id="chat-history">
+          {% for message in chat_history %}
+            {% if loop.index % 2 == 0 %}
+              <div class="row justify-content-end">
+                <div class="col-6 col-md-4 bg-primary text-white text-right p-2 rounded mb-1">{{ message }}</div>
+              </div>
+            {% else %}
+              <div class="row justify-content-start">
+                <div class="col-6 col-md-4 bg-light text-left p-2 rounded mb-1">{{ message }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="card-footer">
+          <div class="input-group">
+            <input type="text" class="form-control" id="question-input" placeholder="Type your question here...">
+            <div class="input-group-append">
+              <button class="btn btn-primary" id="send-button">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Send the user's question to the server and display the response
+      function sendQuestion() {
+        var question = $('#question-input').val();
+        var chat_history = $('#chat-history').children().map(function() {
+          return $(this).text();
+        }).get();
+
+        $.ajax({
+          type: 'POST',
+          url: '/get-response',
+          data: {question: question, chat_history: chat_history},
+          dataType: 'json',
+          success: function(data) {
+            var response = data.response;
+            $('#chat-history').append('<div class="row justify-content-start"><div class="col-6 col-md-4 bg-light text-left p-2 rounded mb-1">' + question + '</div></div>');
+            $('#chat-history').append('<div class="row justify-content-end"><div class="col-6 col-md-4 bg-primary text-white text-right p-2 rounded mb-1">' + response + '</div></div>');
+            $('#question-input').val('');
+            $('#question-input').focus();
+          }
+        });
+      }
+
+      // Send the user's question when they click the send button or press enter
+      $('#send-button').click(sendQuestion);
+      $('#question-input').keydown(function(event) {
+        if (event.keyCode == 13) {
+          sendQuestion();
+        }
+      });
+    </script>
+  </body>
+</html>
