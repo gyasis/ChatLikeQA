@@ -1,1 +1,4 @@
 .DS_Store
+config.py
+data/
+chromma_logs.logs
