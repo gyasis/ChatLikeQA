@@ -7,64 +7,117 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+      .sidebar {
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 200px;
+          background-color: #343a40;
+          padding: 20px;
+      }
+      .content {
+          margin-left: 200px;
+          padding: 20px;
+      }
+  </style>
   </head>
   <body>
-    <div class="container">
-      <h1 class="text-center">Romeo and Juliet Chatbot</h1>
-      <div id="chatbox" class="card mb-3">
-        <div class="card-body" id="chat-history">
-          {% for message in chat_history %}
-            {% if loop.index % 2 == 0 %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-dark sidebar">
+          <div class="container">
+            <h2 class="text-white">File Upload</h2>
+            <form id="file-upload-form" action="/upload-file" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="source" value="chat">
+              <div class="form-group">
+                <label class="text-white">Choose File</label>
+                <input type="file" name="file" id="file" class="form-control-file">
+              </div>
+              <button type="submit" name="submit" class="btn btn-primary">Upload</button>
+            </form>
+            
+          </div>
+        </div>
+        <div class="col-md-10 content">
+          <h1 class="text-center">Document Chatbot</h1>
+          <div id="chatbox" class="card mb-3">
+            <div class="card-body" id="chat-history">
+              {% for message in chat_history %}
+              {% if loop.index % 2 == 0 %}
               <div class="row justify-content-end">
                 <div class="col-6 col-md-4 bg-primary text-white text-right p-2 rounded mb-1">{{ message }}</div>
               </div>
-            {% else %}
+              {% else %}
               <div class="row justify-content-start">
                 <div class="col-6 col-md-4 bg-light text-left p-2 rounded mb-1">{{ message }}</div>
               </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-        <div class="card-footer">
-          <div class="input-group">
-            <input type="text" class="form-control" id="question-input" placeholder="Type your question here...">
-            <div class="input-group-append">
-              <button class="btn btn-primary" id="send-button">Send</button>
+              {% endif %}
+              {% endfor %}
+            </div>
+            <div class="card-footer">
+              <div class="input-group">
+                <input type="text" class="form-control" id="question-input" placeholder="Type your question here...">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" id="send-button">Send</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <script>
-      // Send the user's question to the server and display the response
-      function sendQuestion() {
-        var question = $('#question-input').val();
-        var chat_history = $('#chat-history').children().map(function() {
-          return $(this).text();
-        }).get();
-
-        $.ajax({
-          type: 'POST',
-          url: '/get-response',
-          data: {question: question, chat_history: chat_history},
-          dataType: 'json',
-          success: function(data) {
-            var response = data.response;
-            $('#chat-history').append('<div class="row justify-content-start"><div class="col-6 col-md-4 bg-light text-left p-2 rounded mb-1">' + question + '</div></div>');
-            $('#chat-history').append('<div class="row justify-content-end"><div class="col-6 col-md-4 bg-primary text-white text-right p-2 rounded mb-1">' + response + '</div></div>');
-            $('#question-input').val('');
-            $('#question-input').focus();
+        // Send the user's question to the server and display the response
+        function sendQuestion() {
+          var question = $('#question-input').val();
+          var chat_history = $('#chat-history').children().map(function() {
+            return $(this).text();
+          }).get();
+      
+          $.ajax({
+            type: 'POST',
+            url: '/get-response',
+            data: {question: question, chat_history: chat_history},
+            dataType: 'json',
+            success: function(data) {
+              var response = data.response;
+              $('#chat-history').append('<div class="row justify-content-start"><div class="col-6 col-md-4 bg-light text-left p-2 rounded mb-1">' + question + '</div></div>');
+              $('#chat-history').append('<div class="row justify-content-end"><div class="col-6 col-md-4 bg-primary text-white text-right p-2 rounded mb-1">' + response + '</div></div>');
+              $('#question-input').val('');
+              $('#question-input').focus();
+            }
+          });
+        }
+      
+        // Send the user's question when they click the send button or press enter
+        $('#send-button').click(sendQuestion);
+        $('#question-input').keydown(function(event) {
+          if (event.keyCode == 13) {
+            sendQuestion();
           }
         });
-      }
-
-      // Send the user's question when they click the send button or press enter
-      $('#send-button').click(sendQuestion);
-      $('#question-input').keydown(function(event) {
-        if (event.keyCode == 13) {
-          sendQuestion();
-        }
-      });
-    </script>
-  </body>
-</html>
+      
+        // Handle file upload form submission
+        $('#file-upload-form').submit(function(event) {
+          event.preventDefault(); // Prevent default form submission behavior
+      
+          var formData = new FormData(this); // Create new form data object
+          $.ajax({
+            url: '/upload-file', // Route to handle file upload
+            type: 'POST',
+            data: formData,
+            processData: false, // Do not process the data
+            contentType: false, // Do not set content type
+            success: function(data) {
+              alert('File uploaded successfully!'); // Show success message
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              alert('File upload failed: ' + textStatus); // Show error message
+            }
+          });
+        });
+      </script>
+      </body>
+      </html>
