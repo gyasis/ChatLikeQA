@@ -31,6 +31,9 @@ os.environ["OPENAI_API_KEY"] = API_KEY
 # Define the allowed file types
 ALLOWED_EXTENSIONS = {'txt', 'pdf'}
 
+# Define the allowed file types
+ALLOWED_EXTENSIONS = {'txt', 'pdf'}
+
 # Define the function to check if the file extension is allowed
 def allowed_file(filename):
     return '.' in filename and \
@@ -46,7 +49,6 @@ def generate_response(query, chain, chat_history):
 
     # Return the chatbot's response
     return result
-
 # %%
 def clear_data_folder():
     data_folder = os.path.join(os.getcwd(), 'data')
@@ -61,6 +63,7 @@ def clear_data_folder():
 
 def create_new_vectordb(filename, persist=True, overwrite_existing_db=False):
     global chain, chat_history
+    
     # Read in the file data
     with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb') as f:
         data = f.read()
@@ -81,16 +84,15 @@ def create_new_vectordb(filename, persist=True, overwrite_existing_db=False):
     else:
         # Otherwise, assume it's a list of documents
         docs = text_splitter.split_documents(documents)
-        
-
 
     # Create the vector database
     embeddings = OpenAIEmbeddings()
     data_folder = os.path.join(os.getcwd(), 'data')
     if not os.path.exists(data_folder):
         os.makedirs(data_folder)
+    
     if overwrite_existing_db:
-        #nucler option to removed contnet of data folder
+        # Clear the data folder if the overwrite flag is set to True
         clear_data_folder()
         persist_directory = os.path.join(data_folder, filename.rsplit('.', 1)[0])
         if os.path.exists(persist_directory):
@@ -98,20 +100,13 @@ def create_new_vectordb(filename, persist=True, overwrite_existing_db=False):
         os.makedirs(persist_directory)
     else:
         persist_directory = data_folder
+    
     vectordb = Chroma.from_documents(docs, embeddings, persist_directory=persist_directory)
 
     # Create the chatbot chain and return it
     chain = ChatVectorDBChain.from_llm(OpenAI(temperature=0, model_name="gpt-3.5-turbo"), vectordb, return_source_documents=True)
     chat_history = []
     
-    vectordb = Chroma.from_documents(docs,
-                                     embeddings,
-                                     persist_directory=data_folder)
-
-    # Create the chatbot chain and return it
-    chain = ChatVectorDBChain.from_llm(OpenAI(temperature=0, model_name="gpt-3.5-turbo"), vectordb, return_source_documents=True)
-    chat_history = []
-
     # Persist the vector database if persist flag is set to True
     if persist: 
         vectordb.persist()
@@ -193,18 +188,18 @@ def upload_file():
         # Save the file to disk
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Load the data from the file
-        if filename.endswith('.txt'):
-            with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'r') as f:
-                data = f.read()
-        elif filename.endswith('.pdf'):
-            with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb') as f:
-                data = io.StringIO(pdfminer.high_level.extract_text(f)).read()
+       
+
+        # Create the document loader and load the documents
+        loader = UnstructuredFileLoader(os.path.join(app.config['UPLOAD_FOLDER'], filename), strategy='fast')
+        documents = loader.load()
+                
         if source == 'chat':
             # Add the data to the vector database
-            add_data_to_vectordb(data, chain)
+            add_data_to_vectordb(documents)
             chat_history = []
             chat_history.append(('INFO', f'Added data from {filename} to the vector database'))
+            
         else: # source == 'index'
             # Create a new vector database
             chain, chat_history = create_new_vectordb(filename,overwrite_existing_db=True)
@@ -217,10 +212,13 @@ def upload_file():
 
 
 # Define the function to add data to the vector database
-def add_data_to_vectordb(data, chain):
+def add_data_to_vectordb(data):
+    global chain
     # Split the data into chunks
+    
     text_splitter = TokenTextSplitter(chunk_size=1000, chunk_overlap=0)
     doc = text_splitter.split_documents(data)
+    
     # Create the embeddings and vector database
     embeddings = OpenAIEmbeddings()
     data_folder = os.path.join(os.getcwd(), 'data')
@@ -234,6 +232,7 @@ def add_data_to_vectordb(data, chain):
     # Create the new chatbot chain and return it
     chain = ChatVectorDBChain.from_llm(OpenAI(temperature=0, model_name="text-davinci-002"), vectordb, return_source_documents=True)
 
+    return chain
 
 # Define the route to use the previous database
 @app.route('/use-previous')

@@ -53,3 +53,50 @@ DEBUG:Chroma:time to run knn query: 0.00013637542724609375
 INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 02:35:21] "POST /get-response HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 02:37:38] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
 INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 02:38:21] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:17:40] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:17:51] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:18:11] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+DEBUG:Chroma:Logger created
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:51:43] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:51:43] "GET /chat HTTP/1.1" 200 -
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:52:51] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:52:51] "GET /chat HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 03:53:32] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+DEBUG:Chroma:Logger created
+DEBUG:Chroma:Index not found
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/Clinical_Radiology_Made_Ridiculously_Simple/index/index.bin
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/Clinical_Radiology_Made_Ridiculously_Simple/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:02:14] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:02:14] "GET /chat HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00016236305236816406
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:03:00] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00019598007202148438
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:03:39] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00015473365783691406
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:04:10] "POST /get-response HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:04:57] "[35m[1mPOST /upload-file HTTP/1.1[0m" 500 -
+DEBUG:Chroma:Index not found
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/index/index.bin
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:05:37] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:05:37] "GET /chat HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00013113021850585938
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:07:13] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00013756752014160156
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:07:51] "[35m[1mPOST /get-response HTTP/1.1[0m" 500 -
+DEBUG:Chroma:time to pre process our knn query: 7.152557373046875e-07
+DEBUG:Chroma:time to run knn query: 0.00014472007751464844
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:08:01] "[35m[1mPOST /get-response HTTP/1.1[0m" 500 -
