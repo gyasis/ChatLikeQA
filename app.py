@@ -15,7 +15,7 @@ import io
 import pdfminer.high_level
 from langchain.document_loaders import UnstructuredFileLoader
 import tempfile
-from langchain.document_loaders import UnstructuredFileLoader
+
 import shutil
 # %%
 
@@ -45,11 +45,33 @@ def generate_response(query, chain, chat_history):
     result = chain({"question": query, "chat_history": chat_history})
 
     # Update the chat history with the user's input and the chatbot's response
-    chat_history.append((query, result['answer']))
+    # chat_history.append((query, result['answer']))
 
     # Return the chatbot's response
     return result
 # %%
+
+# Define the function to load persistent data
+def load_persistent_data(filename):
+    global chain, chat_history
+    
+
+    # Load the vector database
+    data_folder = os.path.join(os.getcwd(), 'data')
+    persist_directory = os.path.join(data_folder, filename)
+    if os.path.exists(persist_directory):
+        vectordb = Chroma.from_directory(persist_directory)
+    else:
+        # If the file doesn't exist, return None
+        return None
+    
+    # Create the chatbot chain and return it
+    chain = ChatVectorDBChain.from_llm(OpenAI(temperature=0, model_name="gpt-3.5-turbo"), vectordb, return_source_documents=True)
+    chat_history = []
+
+    return chain, chat_history
+
+
 def clear_data_folder():
     data_folder = os.path.join(os.getcwd(), 'data')
     if os.path.exists(data_folder):
@@ -152,10 +174,13 @@ def upload():
 @app.route('/get-response', methods=['POST'])
 
 def get_response():
-    global chat_history, chain
+    
+   
     # Get the user's question from the AJAX request
     question = request.form['question']
 
+    chain = ChatVectorDBChain.from_llm(OpenAI(temperature=0, model_name="gpt-3.5-turbo"), vectordb, return_source_documents=True)
+    
     # Generate the chatbot's response
     result = generate_response(question, chain, chat_history)
 

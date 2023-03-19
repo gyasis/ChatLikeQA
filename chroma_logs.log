@@ -100,3 +100,51 @@ INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:07:51] "[35m[1mPOST /get-response 
 DEBUG:Chroma:time to pre process our knn query: 7.152557373046875e-07
 DEBUG:Chroma:time to run knn query: 0.00014472007751464844
 INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 04:08:01] "[35m[1mPOST /get-response HTTP/1.1[0m" 500 -
+DEBUG:Chroma:Logger created
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:14:21] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:14:21] "GET /chat HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 7.152557373046875e-07
+DEBUG:Chroma:time to run knn query: 0.0001595020294189453
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:14:45] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00014710426330566406
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:15:07] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 1.1920928955078125e-06
+DEBUG:Chroma:time to run knn query: 0.00011014938354492188
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:15:28] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 7.152557373046875e-07
+DEBUG:Chroma:time to run knn query: 0.00013208389282226562
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:16:59] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 7.152557373046875e-07
+DEBUG:Chroma:time to run knn query: 0.00012803077697753906
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:18:12] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 1.1920928955078125e-06
+DEBUG:Chroma:time to run knn query: 0.00014138221740722656
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:19:15] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 1.1920928955078125e-06
+DEBUG:Chroma:time to run knn query: 0.00015163421630859375
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:20:32] "POST /get-response HTTP/1.1" 200 -
+DEBUG:Chroma:Logger created
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:38:55] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:38:55] "GET /chat HTTP/1.1" 200 -
+DEBUG:Chroma:time to pre process our knn query: 1.430511474609375e-06
+DEBUG:Chroma:time to run knn query: 0.000202178955078125
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:40:58] "[35m[1mPOST /get-response HTTP/1.1[0m" 500 -
+DEBUG:Chroma:time to pre process our knn query: 9.5367431640625e-07
+DEBUG:Chroma:time to run knn query: 0.00019073486328125
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 12:41:35] "[35m[1mPOST /get-response HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+DEBUG:Chroma:Logger created
+DEBUG:Chroma:Index not found
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/Oxford-Medical-Handbooks-Tim-Raine-George-Collins-Catriona-Hall-Nina-Hjelde-James-Dawson-Stephan-Sanders-Simon-Eccles-Oxford-Handbook-for-the-Foundation-Programme-Oxford-University-Press-20/index/index.bin
+DEBUG:Chroma:Index saved to /media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/data/Oxford-Medical-Handbooks-Tim-Raine-George-Collins-Catriona-Hall-Nina-Hjelde-James-Dawson-Stephan-Sanders-Simon-Eccles-Oxford-Handbook-for-the-Foundation-Programme-Oxford-University-Press-20/index/index.bin
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 13:46:11] "[32mPOST /upload-file HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 13:46:11] "GET /chat HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2023 13:55:57] "[35m[1mPOST /get-response HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
+INFO:werkzeug: * Detected change in '/media/gyasis/Blade 15 SSD/Users/gyasi/Google Drive (not syncing)/Collection/ChatLikeQA/app.py', reloading
