@@ -1,6 +1,8 @@
 # %%
 
 # Import the required libraries and modules
+import os
+import io
 from flask import Flask, render_template, request, flash, redirect
 from werkzeug.utils import secure_filename
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -10,15 +12,12 @@ from langchain.llms import OpenAI
 from langchain.chains import ChatVectorDBChain
 from langchain.document_loaders import GutenbergLoader
 import chromadb
-import os
-import io
 import pdfminer.high_level
 from langchain.document_loaders import UnstructuredFileLoader
 import tempfile
-
 import shutil
 # %%
-
+#get current working directory
 
 # Import the API-Key from the config file
 from config import API_KEY
@@ -30,9 +29,7 @@ os.environ["OPENAI_API_KEY"] = API_KEY
 
 # Define the allowed file types
 ALLOWED_EXTENSIONS = {'txt', 'pdf'}
-
-# Define the allowed file types
-ALLOWED_EXTENSIONS = {'txt', 'pdf'}
+embeddings = OpenAIEmbeddings()
 
 # Define the function to check if the file extension is allowed
 def allowed_file(filename):
@@ -41,26 +38,24 @@ def allowed_file(filename):
 
 # Define the function to generate responses
 def generate_response(query, chain, chat_history):
+    
     # Call the chain function to generate a response
     result = chain({"question": query, "chat_history": chat_history})
 
-    # Update the chat history with the user's input and the chatbot's response
-    # chat_history.append((query, result['answer']))
-
-    # Return the chatbot's response
     return result
 # %%
 
 # Define the function to load persistent data
 def load_persistent_data(filename):
-    global chain, chat_history
+    global vectordb 
     
 
     # Load the vector database
     data_folder = os.path.join(os.getcwd(), 'data')
-    persist_directory = os.path.join(data_folder, filename)
+    persist_directory = os.path.join(data_folder, filename.rsplit('.', 1)[0])
     if os.path.exists(persist_directory):
-        vectordb = Chroma.from_directory(persist_directory)
+        # vectordb.persist(append=True, progress_callback=None)
+        vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
     else:
         # If the file doesn't exist, return None
         return None
@@ -84,7 +79,7 @@ def clear_data_folder():
 # %%
 
 def create_new_vectordb(filename, persist=True, overwrite_existing_db=False):
-    global chain, chat_history
+    global chain, chat_history, vectordb
     
     # Read in the file data
     with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb') as f:
@@ -116,7 +111,7 @@ def create_new_vectordb(filename, persist=True, overwrite_existing_db=False):
     if overwrite_existing_db:
         # Clear the data folder if the overwrite flag is set to True
         clear_data_folder()
-        persist_directory = os.path.join(data_folder, filename.rsplit('.', 1)[0])
+        persist_directory = os.path.join(data_folder, 'vectordb')
         if os.path.exists(persist_directory):
             shutil.rmtree(persist_directory)
         os.makedirs(persist_directory)
@@ -149,6 +144,9 @@ def chat():
         source = request.form.get('source')
         if source == 'index':
             # Load the persistent data
+            
+            print("this is from the index")
+            
             chain, chat_history = load_persistent_data('vectordb')
         else:
             # Create a new vector database
@@ -174,7 +172,6 @@ def upload():
 @app.route('/get-response', methods=['POST'])
 
 def get_response():
-    
    
     # Get the user's question from the AJAX request
     question = request.form['question']
@@ -227,7 +224,9 @@ def upload_file():
             
         else: # source == 'index'
             # Create a new vector database
-            chain, chat_history = create_new_vectordb(filename,overwrite_existing_db=True)
+            chain, chat_history = create_new_vectordb(filename,
+                                                      overwrite_existing_db=True
+                                                      )
             chat_history.append(('INFO', f'Created new vector database from {filename}'))
         # Return the success message
         return redirect('/chat')
